@@ -26,35 +26,35 @@ func Test_GetTemplateThatDoesNotExist(t *testing.T) {
 func Test_GetFilesForEmptyInput(t *testing.T) {
 	expected := []Key{}
 
-	assert.Equal(t, expected, ParseInput(""))
+	assert.Equal(t, expected, ParseInput("").Keys())
 }
 
 func Test_GetFilesForValidSingleInput(t *testing.T) {
 	expected := []Key{"Go"}
 
-	assert.Equal(t, expected, ParseInput("go"))
+	assert.Equal(t, expected, ParseInput("go").Keys())
 }
 
 func Test_GetFilesForValidSingleInputVariation(t *testing.T) {
 	expected := []Key{"Go"}
 
-	assert.Equal(t, expected, ParseInput("Go"))
+	assert.Equal(t, expected, ParseInput("Go").Keys())
 }
 
 func Test_GetFilesForSameInputDuplicated(t *testing.T) {
 	expected := []Key{"Go"}
 
-	assert.Equal(t, expected, ParseInput("go golang"))
+	assert.Equal(t, expected, ParseInput("go golang").Keys())
 }
 
 func Test_GetNoFilesForInvalidInput(t *testing.T) {
 	expected := []Key{}
 
-	assert.Equal(t, expected, ParseInput("asdf"))
+	assert.Equal(t, expected, ParseInput("asdf").Keys())
 }
 
 func Test_GetFilesForMultipleInput(t *testing.T) {
 	expected := []Key{"Go", "VisualStudioCode"}
 
-	assert.ElementsMatch(t, expected, ParseInput("go code"))
+	assert.ElementsMatch(t, expected, ParseInput("go code").Keys())
 }

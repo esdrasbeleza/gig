@@ -16,8 +16,7 @@ type Template struct {
 
 var (
 	templateMap map[Key]*Template
-
-	aliases = map[Key][]Key{
+	aliases     = map[Key][]Key{
 		"Go":               {"golang"},
 		"VisualStudioCode": {"VSCode", "code"},
 	}
@@ -46,10 +45,10 @@ func generateTemplateFileMap() {
 			newFile          = file.Name()
 		)
 
-		if currentTemplate, exists := templateMap[templateName]; exists {
+		if currentTemplate, exists := templateMap[templateName.Lowercase()]; exists {
 			currentTemplate.Files = append(currentTemplate.Files, newFile)
 		} else {
-			templateMap[templateName] = &Template{
+			templateMap[templateName.Lowercase()] = &Template{
 				Name:  templateName,
 				Files: []string{newFile},
 			}
@@ -58,12 +57,9 @@ func generateTemplateFileMap() {
 }
 
 func addAliases() {
-	for templateName, template := range templateMap {
-		templateMap[templateName.Lowercase()] = template
-
-		if templateAliases, exists := aliases[templateName]; exists {
+	for _, template := range templateMap {
+		if templateAliases, exists := aliases[template.Name]; exists {
 			for _, templateAlias := range templateAliases {
-				templateMap[templateAlias] = template
 				templateMap[templateAlias.Lowercase()] = template
 			}
 		}
@@ -71,29 +67,23 @@ func addAliases() {
 }
 
 func GetTemplate(input Key) *Template {
-	if template, exists := templateMap[input]; exists {
+	if template, exists := templateMap[input.Lowercase()]; exists {
 		return template
 	}
 
 	return nil
 }
 
-func ParseInput(input string) []Key {
-	files := make(map[Key]interface{})
+func ParseInput(input string) KeySet {
+	files := NewKeySet()
 
 	for _, word := range strings.Fields(input) {
 		if template := GetTemplate(Key(word)); template != nil {
-			files[template.Name] = nil
+			files.Add(template.Name)
 		} else {
 			fmt.Println("Could not find", word)
 		}
 	}
 
-	fileSlice := []Key{}
-
-	for filename := range files {
-		fileSlice = append(fileSlice, filename)
-	}
-
-	return fileSlice
+	return files
 }
