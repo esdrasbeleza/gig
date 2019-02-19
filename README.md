@@ -39,3 +39,7 @@ $ gig golang code
 # Ignore all local history of files
 .history
 ```
+
+## Interactive mode
+
+Run `gig` without args.
