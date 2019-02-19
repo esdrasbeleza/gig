@@ -12,7 +12,7 @@ Dependencies:
 
 ### From command line
 
-```
+```gitignore
 $ gig golang code
 # Binaries for programs and plugins
 *.exe
