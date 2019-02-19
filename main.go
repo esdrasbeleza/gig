@@ -64,7 +64,6 @@ func getKeysFromPrompt() {
 	}
 
 	defer outputFile.Close()
-	defer outputFile.Sync()
 
 	for _, templateFileKeys := range files.Keys() {
 		filesForKey := GetTemplate(templateFileKeys).Files
