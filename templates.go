@@ -6,17 +6,17 @@ import (
 )
 
 var (
-	inputAliasesMap = map[TemplateFile][]Input{
+	inputAliasesMap = map[TemplateName][]Input{
 		"Go":         {"Go", "golang"},
 		"JavaScript": {"JavaScript", "JS"},
 		"TypeScript": {"TypeScript", "TS"},
 	}
 
-	templateMap map[Input]TemplateFile
+	templateMap map[Input]TemplateName
 )
 
 func generateLanguageMaps() {
-	templateMap = make(map[Input]TemplateFile)
+	templateMap = make(map[Input]TemplateName)
 
 	for templateName, templateAliases := range inputAliasesMap {
 		for _, templateAlias := range templateAliases {
@@ -25,19 +25,19 @@ func generateLanguageMaps() {
 	}
 }
 
-func GetTemplate(input Input) TemplateFile {
+func GetTemplate(input Input) TemplateName {
 	if languageFile, exists := templateMap[input.Lowercase()]; exists {
 		return languageFile
 	}
 
-	return TemplateFile("")
+	return TemplateName("")
 }
 
-func ParseInput(input string) []TemplateFile {
-	files := make(map[TemplateFile]interface{})
+func ParseInput(input string) []TemplateName {
+	files := make(map[TemplateName]interface{})
 
 	for _, word := range strings.Fields(input) {
-		if templateFile := GetTemplate(Input(word)); templateFile != TemplateFile("") {
+		if templateFile := GetTemplate(Input(word)); templateFile != TemplateName("") {
 			fmt.Println("Added", templateFile)
 			files[templateFile] = nil
 		} else {
@@ -45,7 +45,7 @@ func ParseInput(input string) []TemplateFile {
 		}
 	}
 
-	fileSlice := []TemplateFile{}
+	fileSlice := []TemplateName{}
 
 	for filename := range files {
 		fileSlice = append(fileSlice, filename)

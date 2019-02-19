@@ -4,7 +4,7 @@ import "strings"
 
 type (
 	Input        string
-	TemplateFile string
+	TemplateName string
 )
 
 func (i Input) Lowercase() Input {

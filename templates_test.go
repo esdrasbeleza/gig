@@ -9,7 +9,7 @@ import (
 func Test_GetTemplate(t *testing.T) {
 	var (
 		input    = []Input{"go", "Go", "golang"}
-		expected = TemplateFile("Go")
+		expected = TemplateName("Go")
 	)
 
 	for _, i := range input {
@@ -18,29 +18,29 @@ func Test_GetTemplate(t *testing.T) {
 }
 
 func Test_GetTemplateThatDoesNotExist(t *testing.T) {
-	assert.Equal(t, TemplateFile(""), GetTemplate("Weird programming language"))
+	assert.Equal(t, TemplateName(""), GetTemplate("Weird programming language"))
 }
 
 func Test_GetFilesForEmptyInput(t *testing.T) {
-	expected := []TemplateFile{}
+	expected := []TemplateName{}
 
 	assert.Equal(t, expected, ParseInput(""))
 }
 
 func Test_GetFilesForValidSingleInput(t *testing.T) {
-	expected := []TemplateFile{"Go"}
+	expected := []TemplateName{"Go"}
 
 	assert.Equal(t, expected, ParseInput("go"))
 }
 
 func Test_GetFilesForSameInputDuplicated(t *testing.T) {
-	expected := []TemplateFile{"Go"}
+	expected := []TemplateName{"Go"}
 
 	assert.Equal(t, expected, ParseInput("go golang"))
 }
 
 func Test_GetFilesForMultipleInput(t *testing.T) {
-	expected := []TemplateFile{"Go", "JavaScript"}
+	expected := []TemplateName{"Go", "JavaScript"}
 
 	assert.ElementsMatch(t, expected, ParseInput("go js"))
 }

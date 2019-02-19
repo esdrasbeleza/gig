@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	files := []TemplateFile{}
+	files := []TemplateName{}
 
 	fmt.Println("Please select language or platform:")
 
@@ -24,7 +24,7 @@ func main() {
 		files = append(files, newFiles...)
 	}
 
-	for file := range files {
+	for _, file := range files {
 		fmt.Println(file)
 	}
 }
