@@ -16,3 +16,7 @@ func Test_GetTemplate(t *testing.T) {
 		assert.Equal(t, expected, GetTemplate(i))
 	}
 }
+
+func Test_GetTemplateThatDoesNotExist(t *testing.T) {
+	assert.Equal(t, TemplateFile(""), GetTemplate("Weird programming language"))
+}
