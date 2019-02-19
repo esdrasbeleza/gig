@@ -42,5 +42,5 @@ func Test_GetFilesForSameInputDuplicated(t *testing.T) {
 func Test_GetFilesForMultipleInput(t *testing.T) {
 	expected := []TemplateFile{"Go", "JavaScript"}
 
-	assert.Equal(t, expected, ParseInput("go js"))
+	assert.ElementsMatch(t, expected, ParseInput("go js"))
 }
