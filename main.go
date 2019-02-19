@@ -2,19 +2,45 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/c-bata/go-prompt"
 )
 
 func main() {
+	var files KeySet
+
+	if len(os.Args) > 1 {
+		files = getKeysFromArgs()
+	} else {
+		files = getKeysFromPrompt()
+	}
+
+	for _, f := range files.Strings() {
+		fmt.Println(f)
+	}
+}
+
+func getKeysFromArgs() KeySet {
+	var (
+		params = strings.Join(os.Args[1:], " ")
+		files  = ParseInput(params)
+	)
+
+	return files
+}
+
+func getKeysFromPrompt() KeySet {
 	files := NewKeySet()
 
 	fmt.Println("Please select language or platform:")
 
 	for {
-		prefix := fmt.Sprintf("[%s] > ", strings.Join(files.Strings(), ", "))
-		input := prompt.Input(prefix, completer)
+		var (
+			prefix = fmt.Sprintf("[%s] > ", strings.Join(files.Strings(), ", "))
+			input  = prompt.Input(prefix, completer)
+		)
 
 		if strings.TrimSpace(input) == "" {
 			break
@@ -22,8 +48,8 @@ func main() {
 
 		newFiles := ParseInput(input)
 
-		files.Add(newFiles...)
+		files.Merge(newFiles)
 	}
 
-	// TODO: create file
+	return files
 }
