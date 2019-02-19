@@ -34,11 +34,13 @@ func (ks KeySet) Keys() []Key {
 }
 
 func (ks KeySet) Strings() []string {
-	strgs := []string{}
+	strgs := sort.StringSlice{}
 
 	for s := range ks {
 		strgs = append(strgs, s.String())
 	}
 
-	return sort.StringSlice(strgs)
+	strgs.Sort()
+
+	return strgs
 }
