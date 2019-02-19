@@ -2,12 +2,60 @@
 
 
 [[projects]]
+  digest = "1:63586c59c82d8dcfc402e55fcf316813102551bcd84b564ee0a851cdeab5ad11"
+  name = "github.com/c-bata/go-prompt"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "4b35da6de174f52d037dc6e9008772ef31990ed3"
+  version = "v0.2.3"
+
+[[projects]]
   digest = "1:ffe9824d294da03b391f44e1ae8281281b4afc1bdaa9588c9097785e3af10cec"
   name = "github.com/davecgh/go-spew"
   packages = ["spew"]
   pruneopts = "UT"
   revision = "8991bc29aa16c548c550c7ff78260e27b9ab7c73"
   version = "v1.1.1"
+
+[[projects]]
+  digest = "1:c658e84ad3916da105a761660dcaeb01e63416c8ec7bc62256a9b411a05fcd67"
+  name = "github.com/mattn/go-colorable"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "167de6bfdfba052fa6b2d3664c8f5272e23c9072"
+  version = "v0.0.9"
+
+[[projects]]
+  digest = "1:0981502f9816113c9c8c4ac301583841855c8cf4da8c72f696b3ebedf6d0e4e5"
+  name = "github.com/mattn/go-isatty"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "6ca4dbf54d38eea1a992b3c722a76a5d1c4cb25c"
+  version = "v0.0.4"
+
+[[projects]]
+  branch = "master"
+  digest = "1:5e6d66b03ec2df7ce14d19ad75f35d189ae56d5169813fb20eca4d076d81d37e"
+  name = "github.com/mattn/go-runewidth"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "703b5e6b11ae25aeb2af9ebb5d5fdf8fa2575211"
+
+[[projects]]
+  branch = "master"
+  digest = "1:11bcfda807929a34ceb3738c9b0145358d1c58ed00acecb25b27fe432b404135"
+  name = "github.com/mattn/go-tty"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "e4f871175a2f903ed2e6353334fdccb507c1d09e"
+
+[[projects]]
+  branch = "master"
+  digest = "1:fcb0de0dfbff6314fa0eb3672942d86054a713922b7c1bb0a690f59e6fe1ae3c"
+  name = "github.com/pkg/term"
+  packages = ["termios"]
+  pruneopts = "UT"
+  revision = "aa71e9d9e942418fbb97d80895dcea70efed297c"
 
 [[projects]]
   digest = "1:0028cb19b2e4c3112225cd871870f2d9cf49b9b4276531f03438a88e94be86fe"
@@ -18,29 +66,27 @@
   version = "v1.0.0"
 
 [[projects]]
-  digest = "1:ac83cf90d08b63ad5f7e020ef480d319ae890c208f8524622a2f3136e2686b02"
-  name = "github.com/stretchr/objx"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "477a77ecc69700c7cdeb1fa9e129548e1c1c393c"
-  version = "v0.1.1"
-
-[[projects]]
-  digest = "1:79c7e1dc6789fc4329a52a4f502cb71fb5d44eccbc665f6f7907c8cc06e48441"
+  digest = "1:972c2427413d41a1e06ca4897e8528e5a1622894050e2f527b38ddf0f343f759"
   name = "github.com/stretchr/testify"
-  packages = [
-    ".",
-    "assert",
-    "http",
-    "mock",
-  ]
+  packages = ["assert"]
   pruneopts = "UT"
   revision = "ffdc059bfe9ce6a4e144ba849dbedead332c6053"
   version = "v1.3.0"
 
+[[projects]]
+  branch = "master"
+  digest = "1:8207c052fb873f83c61a5aa16f6add5feb9881eda2112b56f69fd3b9e7f55c3f"
+  name = "golang.org/x/sys"
+  packages = ["unix"]
+  pruneopts = "UT"
+  revision = "153ac476189d567564fda94622d7a8c0fb338f6b"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["github.com/stretchr/testify"]
+  input-imports = [
+    "github.com/c-bata/go-prompt",
+    "github.com/stretchr/testify/assert",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
