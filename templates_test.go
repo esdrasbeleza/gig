@@ -20,3 +20,27 @@ func Test_GetTemplate(t *testing.T) {
 func Test_GetTemplateThatDoesNotExist(t *testing.T) {
 	assert.Equal(t, TemplateFile(""), GetTemplate("Weird programming language"))
 }
+
+func Test_GetFilesForEmptyInput(t *testing.T) {
+	expected := []TemplateFile{}
+
+	assert.Equal(t, expected, ParseInput(""))
+}
+
+func Test_GetFilesForValidSingleInput(t *testing.T) {
+	expected := []TemplateFile{"Go"}
+
+	assert.Equal(t, expected, ParseInput("go"))
+}
+
+func Test_GetFilesForSameInputDuplicated(t *testing.T) {
+	expected := []TemplateFile{"Go"}
+
+	assert.Equal(t, expected, ParseInput("go golang"))
+}
+
+func Test_GetFilesForMultipleInput(t *testing.T) {
+	expected := []TemplateFile{"Go", "JavaScript"}
+
+	assert.Equal(t, expected, ParseInput("go js"))
+}
