@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"strings"
 
@@ -9,13 +10,18 @@ import (
 )
 
 func main() {
-	var files KeySet
-
 	if len(os.Args) > 1 {
-		files = getKeysFromArgs()
+		getKeysFromArgs()
 	} else {
-		files = getKeysFromPrompt()
+		getKeysFromPrompt()
 	}
+}
+
+func getKeysFromArgs() {
+	var (
+		params = strings.Join(os.Args[1:], " ")
+		files  = ParseInput(params)
+	)
 
 	for _, key := range files.Keys() {
 		filesToOutput := GetTemplate(key).Files
@@ -27,16 +33,7 @@ func main() {
 	}
 }
 
-func getKeysFromArgs() KeySet {
-	var (
-		params = strings.Join(os.Args[1:], " ")
-		files  = ParseInput(params)
-	)
-
-	return files
-}
-
-func getKeysFromPrompt() KeySet {
+func getKeysFromPrompt() {
 	files := NewKeySet()
 
 	fmt.Println("Please select language or platform:")
@@ -56,5 +53,31 @@ func getKeysFromPrompt() KeySet {
 		files.Merge(newFiles)
 	}
 
-	return files
+	var (
+		filenameInput   = prompt.Input("Output file to append: ", nilCompleter)
+		outputFile, err = os.OpenFile(filenameInput, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0644)
+	)
+
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(1)
+	}
+
+	defer outputFile.Close()
+	defer outputFile.Sync()
+
+	for _, templateFileKeys := range files.Keys() {
+		filesForKey := GetTemplate(templateFileKeys).Files
+
+		for _, templateFile := range filesForKey {
+			boxFile, _ := box.Open(templateFile)
+			defer boxFile.Close()
+
+			if _, err := io.Copy(outputFile, boxFile); err != nil {
+				fmt.Println(err.Error())
+				os.Exit(1)
+			}
+		}
+	}
+
 }

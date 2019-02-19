@@ -16,3 +16,7 @@ func completer(d prompt.Document) []prompt.Suggest {
 
 	return prompt.FilterFuzzy(suggestions, d.GetWordBeforeCursor(), true)
 }
+
+func nilCompleter(d prompt.Document) []prompt.Suggest {
+	return []prompt.Suggest{}
+}
