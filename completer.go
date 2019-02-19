@@ -14,5 +14,5 @@ func completer(d prompt.Document) []prompt.Suggest {
 		suggestions = append(suggestions, mainSuggest)
 	}
 
-	return prompt.FilterHasPrefix(suggestions, d.GetWordBeforeCursor(), true)
+	return prompt.FilterFuzzy(suggestions, d.GetWordBeforeCursor(), true)
 }
