@@ -9,20 +9,23 @@ import (
 	"strings"
 )
 
-type TemplateFile string
+type (
+	TemplateFile string
+	TemplateName string
 
-type Template struct {
-	Name    TemplateName
-	Aliases []Input
-	Files   []string
-}
+	Template struct {
+		Name    TemplateName
+		Aliases []Input
+		Files   []string
+	}
+)
 
 var (
 	templateFileMap map[TemplateName]*Template
 
 	inputAliasesMap = map[TemplateName][]Input{
-		"Go":               {"Go", "golang"},
-		"VisualStudioCode": {"VisualStudioCode", "VSCode", "code"},
+		"Go":               {"golang"},
+		"VisualStudioCode": {"VSCode", "code"},
 	}
 
 	templateMap map[Input]*Template

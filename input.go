@@ -3,8 +3,7 @@ package main
 import "strings"
 
 type (
-	Input        string
-	TemplateName string
+	Input string
 )
 
 func (i Input) Lowercase() Input {
