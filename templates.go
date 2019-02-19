@@ -2,11 +2,10 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
-	"log"
-	"os"
 	"path"
 	"strings"
+
+	"github.com/gobuffalo/packr/v2/file"
 )
 
 type Template struct {
@@ -25,16 +24,11 @@ var (
 func generateTemplateFileMap() {
 	templateMap = make(map[Key]*Template)
 
-	files, err := ioutil.ReadDir("./gitignore/templates")
+	box.Walk(func(filename string, file file.File) error {
+		info, _ := file.FileInfo()
 
-	if err != nil {
-		log.Fatal(err)
-		os.Exit(1)
-	}
-
-	for _, file := range files {
-		if file.IsDir() {
-			continue
+		if info.IsDir() {
+			return nil
 		}
 
 		var (
@@ -53,7 +47,9 @@ func generateTemplateFileMap() {
 				Files: []string{newFile},
 			}
 		}
-	}
+
+		return nil
+	})
 }
 
 func addAliases() {

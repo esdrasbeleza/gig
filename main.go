@@ -17,8 +17,13 @@ func main() {
 		files = getKeysFromPrompt()
 	}
 
-	for _, f := range files.Strings() {
-		fmt.Println(f)
+	for _, key := range files.Keys() {
+		filesToOutput := GetTemplate(key).Files
+
+		for _, file := range filesToOutput {
+			content, _ := box.FindString(file)
+			fmt.Println(content)
+		}
 	}
 }
 
