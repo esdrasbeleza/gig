@@ -8,12 +8,13 @@ import (
 )
 
 func main() {
-	files := []Key{}
+	files := NewKeySet()
 
 	fmt.Println("Please select language or platform:")
 
 	for {
-		input := prompt.Input("> ", completer)
+		prefix := fmt.Sprintf("[%s] > ", strings.Join(files.Strings(), ", "))
+		input := prompt.Input(prefix, completer)
 
 		if strings.TrimSpace(input) == "" {
 			break
@@ -21,10 +22,8 @@ func main() {
 
 		newFiles := ParseInput(input)
 
-		files = append(files, newFiles...)
+		files.Add(newFiles...)
 	}
 
-	for _, file := range files {
-		fmt.Println(file)
-	}
+	// TODO: create file
 }

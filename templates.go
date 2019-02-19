@@ -15,8 +15,7 @@ type Template struct {
 }
 
 var (
-	templateMap      map[Key]*Template
-	templateAliasMap map[Key]*Template
+	templateMap map[Key]*Template
 
 	aliases = map[Key][]Key{
 		"Go":               {"golang"},
@@ -59,26 +58,20 @@ func generateTemplateFileMap() {
 }
 
 func addAliases() {
-	templateAliasMap = make(map[Key]*Template)
-
 	for templateName, template := range templateMap {
-		templateAliasMap[templateName.Lowercase()] = template
+		templateMap[templateName.Lowercase()] = template
 
 		if templateAliases, exists := aliases[templateName]; exists {
 			for _, templateAlias := range templateAliases {
-				templateAliasMap[templateAlias] = template
-				templateAliasMap[templateAlias.Lowercase()] = template
+				templateMap[templateAlias] = template
+				templateMap[templateAlias.Lowercase()] = template
 			}
 		}
 	}
 }
 
 func GetTemplate(input Key) *Template {
-	if template, exists := templateMap[Key(string(input))]; exists {
-		return template
-	}
-
-	if template, exists := templateAliasMap[Key(string(input))]; exists {
+	if template, exists := templateMap[input]; exists {
 		return template
 	}
 
