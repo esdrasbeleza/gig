@@ -5,15 +5,13 @@ import "github.com/c-bata/go-prompt"
 func completer(d prompt.Document) []prompt.Suggest {
 	suggestions := []prompt.Suggest{}
 
-	for file, aliases := range inputAliasesMap {
-		for _, alias := range aliases {
-			suggest := prompt.Suggest{
-				Text:        string(alias),
-				Description: string(file),
-			}
-
-			suggestions = append(suggestions, suggest)
+	for key, template := range templateMap {
+		mainSuggest := prompt.Suggest{
+			Text:        string(key),
+			Description: string(template.Name),
 		}
+
+		suggestions = append(suggestions, mainSuggest)
 	}
 
 	return prompt.FilterHasPrefix(suggestions, d.GetWordBeforeCursor(), true)

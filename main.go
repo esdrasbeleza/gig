@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	files := []TemplateName{}
+	files := []Key{}
 
 	fmt.Println("Please select language or platform:")
 

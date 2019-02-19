@@ -8,8 +8,8 @@ import (
 
 func Test_Input_Lowercase(t *testing.T) {
 	var (
-		input  = Input("Go")
-		output = Input("go")
+		input  = Key("Go")
+		output = Key("go")
 	)
 
 	assert.Equal(t, output, input.Lowercase())

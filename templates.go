@@ -9,30 +9,23 @@ import (
 	"strings"
 )
 
-type (
-	TemplateFile string
-	TemplateName string
-
-	Template struct {
-		Name    TemplateName
-		Aliases []Input
-		Files   []string
-	}
-)
+type Template struct {
+	Name  Key
+	Files []string
+}
 
 var (
-	templateFileMap map[TemplateName]*Template
+	templateMap      map[Key]*Template
+	templateAliasMap map[Key]*Template
 
-	inputAliasesMap = map[TemplateName][]Input{
+	aliases = map[Key][]Key{
 		"Go":               {"golang"},
 		"VisualStudioCode": {"VSCode", "code"},
 	}
-
-	templateMap map[Input]*Template
 )
 
 func generateTemplateFileMap() {
-	templateFileMap = make(map[TemplateName]*Template)
+	templateMap = make(map[Key]*Template)
 
 	files, err := ioutil.ReadDir("./gitignore/templates")
 
@@ -50,14 +43,14 @@ func generateTemplateFileMap() {
 			extension        = path.Ext(file.Name())
 			withoutExtension = strings.TrimSuffix(file.Name(), extension)
 			beforePlus       = strings.Split(withoutExtension, "+")[0]
-			templateName     = TemplateName(beforePlus)
+			templateName     = Key(beforePlus)
 			newFile          = file.Name()
 		)
 
-		if currentTemplate, exists := templateFileMap[templateName]; exists {
+		if currentTemplate, exists := templateMap[templateName]; exists {
 			currentTemplate.Files = append(currentTemplate.Files, newFile)
 		} else {
-			templateFileMap[templateName] = &Template{
+			templateMap[templateName] = &Template{
 				Name:  templateName,
 				Files: []string{newFile},
 			}
@@ -65,41 +58,45 @@ func generateTemplateFileMap() {
 	}
 }
 
-func generateLanguageMaps() {
-	templateMap = make(map[Input]*Template)
+func addAliases() {
+	templateAliasMap = make(map[Key]*Template)
 
-	for templateName, template := range templateFileMap {
-		if templateAliases, exists := inputAliasesMap[templateName]; exists {
-			template.Aliases = templateAliases
+	for templateName, template := range templateMap {
+		templateAliasMap[templateName.Lowercase()] = template
 
+		if templateAliases, exists := aliases[templateName]; exists {
 			for _, templateAlias := range templateAliases {
-				templateMap[templateAlias.Lowercase()] = template
+				templateAliasMap[templateAlias] = template
+				templateAliasMap[templateAlias.Lowercase()] = template
 			}
 		}
 	}
 }
 
-func GetTemplate(input Input) *Template {
-	if template, exists := templateMap[input.Lowercase()]; exists {
+func GetTemplate(input Key) *Template {
+	if template, exists := templateMap[Key(string(input))]; exists {
+		return template
+	}
+
+	if template, exists := templateAliasMap[Key(string(input))]; exists {
 		return template
 	}
 
 	return nil
 }
 
-func ParseInput(input string) []TemplateName {
-	files := make(map[TemplateName]interface{})
+func ParseInput(input string) []Key {
+	files := make(map[Key]interface{})
 
 	for _, word := range strings.Fields(input) {
-		if template := GetTemplate(Input(word)); template != nil {
-			fmt.Println("Added", template.Name)
+		if template := GetTemplate(Key(word)); template != nil {
 			files[template.Name] = nil
 		} else {
 			fmt.Println("Could not find", word)
 		}
 	}
 
-	fileSlice := []TemplateName{}
+	fileSlice := []Key{}
 
 	for filename := range files {
 		fileSlice = append(fileSlice, filename)
