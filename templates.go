@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"path"
 	"strings"
 
@@ -77,7 +77,7 @@ func ParseInput(input string) KeySet {
 		if template := GetTemplate(Key(word)); template != nil {
 			files.Add(template.Name)
 		} else {
-			fmt.Println("Could not find", word)
+			log.Println("Could not find", word)
 		}
 	}
 
