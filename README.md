@@ -8,6 +8,17 @@ Dependencies:
 - [go-prompt](github.com/c-bata/go-prompt)
 - [testify](github.com/stretchr/testify)
 
+## Downloading and building
+
+Assuming you have [Go installed](https://golang.org/doc/install):
+
+```
+$ go get -u github.com/esdrasbeleza/gig
+$ cd $GOPATH/src/github.com/esdrasbeleza/gig
+$ make setup
+$ make install
+```
+
 ## Using
 
 ### From command line
