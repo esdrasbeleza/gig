@@ -12,7 +12,7 @@ Dependencies:
 
 ### From command line
 
-```
+```gitignore
 $ gig golang code
 # Binaries for programs and plugins
 *.exe
@@ -39,3 +39,7 @@ $ gig golang code
 # Ignore all local history of files
 .history
 ```
+
+## Interactive mode
+
+Run `gig` without args.
