@@ -4,7 +4,10 @@ packr2:
 deps:
 	dep ensure
 
-setup: packr2 deps 
+submodules:
+	git submodule update --init --recursive
+
+setup: packr2 deps submodules 
 
 build:
 	packr2 build
