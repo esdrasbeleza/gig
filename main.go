@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"strings"
 
@@ -59,7 +60,7 @@ func getKeysFromPrompt() {
 	)
 
 	if err != nil {
-		fmt.Println(err.Error())
+		log.Println(err.Error())
 		os.Exit(1)
 	}
 
@@ -73,7 +74,7 @@ func getKeysFromPrompt() {
 			defer boxFile.Close()
 
 			if _, err := io.Copy(outputFile, boxFile); err != nil {
-				fmt.Println(err.Error())
+				log.Println(err.Error())
 				os.Exit(1)
 			}
 		}
