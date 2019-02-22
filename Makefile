@@ -1,18 +1,18 @@
-packr2:
+install-packr2:
 	go get -u github.com/gobuffalo/packr/v2/...
 
-deps:
+install-deps:
 	dep ensure
 
-submodules:
+update-submodules:
 	git submodule update --init --recursive
 
-setup: packr2 deps submodules 
+setup: install-packr2 install-deps update-submodules 
 
 build:
 	packr2 build
 
-install:
+install: build
 	packr2 install
 
 clean:
