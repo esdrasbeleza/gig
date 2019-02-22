@@ -54,6 +54,10 @@ func getKeysFromPrompt() {
 		files.Merge(newFiles)
 	}
 
+	if files.IsEmpty() {
+		os.Exit(0)
+	}
+
 	var (
 		filenameInput   = prompt.Input("Output file to append: ", nilCompleter)
 		outputFile, err = os.OpenFile(filenameInput, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0644)
