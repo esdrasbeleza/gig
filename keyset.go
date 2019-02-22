@@ -44,3 +44,7 @@ func (ks KeySet) Strings() []string {
 
 	return strgs
 }
+
+func (ks KeySet) IsEmpty() bool {
+	return len(ks) == 0
+}
