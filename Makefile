@@ -19,3 +19,8 @@ clean:
 	packr2 clean
 	rm -rf vendor/
 	rm -f gig
+
+test-ci: setup build
+	go test ./...
+
+	
