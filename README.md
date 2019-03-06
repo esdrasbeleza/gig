@@ -1,6 +1,6 @@
 # gig
 
-`gig` is a `.gitignore` generator.
+`gig` is a `.gitignore` generator. It's like [gitignore.io](https://gitignore.io), but on command line.
 
 Dependencies:
 - [gitignore files](https://github.com/dvcs/gitignore)
