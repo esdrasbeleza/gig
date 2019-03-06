@@ -55,4 +55,4 @@ $ gig golang code
 
 Run `gig` without args:
 
-[Screenshot](https://i.imgur.com/pCOJsEq.png)
+![Screenshot](https://i.imgur.com/pCOJsEq.png)
