@@ -53,4 +53,6 @@ $ gig golang code
 
 ## Interactive mode
 
-Run `gig` without args.
+Run `gig` without args:
+
+[Screenshot](https://i.imgur.com/pCOJsEq.png)
