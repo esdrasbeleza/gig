@@ -1,11 +1,10 @@
 package main
 
 import (
+	"io/fs"
 	"log"
-	"path"
+	"path/filepath"
 	"strings"
-
-	"github.com/gobuffalo/packr/v2/file"
 )
 
 type Template struct {
@@ -24,27 +23,26 @@ var (
 func generateTemplateFileMap() {
 	templateMap = make(map[Key]*Template)
 
-	box.Walk(func(filename string, file file.File) error {
-		info, _ := file.FileInfo()
+	fs.WalkDir(templates, ".", func(fullPath string, file fs.DirEntry, err error) error {
+		info, _ := file.Info()
 
 		if info.IsDir() {
 			return nil
 		}
 
 		var (
-			extension        = path.Ext(file.Name())
+			extension        = filepath.Ext(file.Name())
 			withoutExtension = strings.TrimSuffix(file.Name(), extension)
 			beforePlus       = strings.Split(withoutExtension, "+")[0]
 			templateName     = Key(beforePlus)
-			newFile          = file.Name()
 		)
 
 		if currentTemplate, exists := templateMap[templateName.Lowercase()]; exists {
-			currentTemplate.Files = append(currentTemplate.Files, newFile)
+			currentTemplate.Files = append(currentTemplate.Files, fullPath)
 		} else {
 			templateMap[templateName.Lowercase()] = &Template{
 				Name:  templateName,
-				Files: []string{newFile},
+				Files: []string{fullPath},
 			}
 		}
 

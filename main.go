@@ -28,8 +28,12 @@ func getKeysFromArgs() {
 		filesToOutput := GetTemplate(key).Files
 
 		for _, file := range filesToOutput {
-			content, _ := box.FindString(file)
-			fmt.Println(content)
+			content, err := templates.ReadFile(file)
+			if err != nil {
+				log.Println(err.Error())
+				continue
+			}
+			fmt.Println(string(content))
 		}
 	}
 }
@@ -74,10 +78,14 @@ func getKeysFromPrompt() {
 		filesForKey := GetTemplate(templateFileKeys).Files
 
 		for _, templateFile := range filesForKey {
-			boxFile, _ := box.Open(templateFile)
-			defer boxFile.Close()
+			file, err := templates.Open(templateFile)
+			if err != nil {
+				log.Println(err.Error())
+				os.Exit(1)
+			}
+			defer file.Close()
 
-			if _, err := io.Copy(outputFile, boxFile); err != nil {
+			if _, err := io.Copy(outputFile, file); err != nil {
 				log.Println(err.Error())
 				os.Exit(1)
 			}

@@ -4,7 +4,6 @@
 
 Dependencies:
 - [gitignore files](https://github.com/dvcs/gitignore)
-- [packr](github.com/gobuffalo/packr)
 - [go-prompt](github.com/c-bata/go-prompt)
 - [testify](github.com/stretchr/testify)
 
@@ -14,7 +13,6 @@ Assuming you have [Go installed](https://golang.org/doc/install):
 
 ```
 $ go get -u github.com/esdrasbeleza/gig
-$ cd $GOPATH/src/github.com/esdrasbeleza/gig
 $ make setup
 $ make install
 ```

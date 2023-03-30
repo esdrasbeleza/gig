@@ -1,23 +1,16 @@
-install-packr2:
-	go get -u github.com/gobuffalo/packr/v2/...
-
 install-deps:
-	dep ensure
+	go mod download
+	go get -t github.com/esdrasbeleza/gig
 
 update-submodules:
 	git submodule update --init --recursive
 
-setup: install-packr2 install-deps update-submodules 
+setup: install-deps update-submodules 
 
 build:
-	packr2 build
-
-install: build
-	packr2 install
+	go build .
 
 clean:
-	packr2 clean
-	rm -rf vendor/
 	rm -f gig
 
 test-ci: setup build
