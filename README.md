@@ -12,10 +12,12 @@ Dependencies:
 Assuming you have [Go installed](https://golang.org/doc/install):
 
 ```
-$ go get -u github.com/esdrasbeleza/gig
+$ git clone https://github.com/esdrasbeleza/gig.git
 $ make setup
-$ make install
+$ go install
 ```
+
+This will install `gig` into your `$GOPATH/go/bin`.
 
 ## Using
 
